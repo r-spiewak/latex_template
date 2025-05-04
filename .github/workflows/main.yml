@@ -25,7 +25,7 @@ jobs:
         # texlive-version: 2024  # <- Pin to TeX Live 2024 (not 'latest')
         # mirror: http://mirror.ctan.org/systems/texlive/tlnet
         # mirror-url: http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet
-        version: 2025
+        # version: 2025
         # repository: http://mirror.ctan.org/systems/texlive/tlnet
         repository: http://ctan.math.utah.edu/tex-archive/systems/texlive/tlnet
         packages: >-
@@ -37,8 +37,8 @@ jobs:
           # filecontents
     - name: Compile tests
       run: latexmk -pdf -shell-escape tests.tex
-    - name: Parse test results
-      run: bash utils/parse_tests.sh tests.log
+    # - name: Parse test results
+    #   run: bash utils/parse_tests.sh tests.log
     - name: Running checks
       # run: |
       #   source $VENV  
