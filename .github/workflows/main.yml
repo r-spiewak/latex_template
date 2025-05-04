@@ -26,7 +26,8 @@ jobs:
         # mirror: http://mirror.ctan.org/systems/texlive/tlnet
         # mirror-url: http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet
         version: 2024
-        repository: http://mirror.ctan.org/systems/texlive/tlnet
+        # repository: http://mirror.ctan.org/systems/texlive/tlnet
+        repository: http://ctan.math.utah.edu/tex-archive/systems/texlive/tlnet
         packages: >-
           latex-bin
           latexmk
