@@ -23,6 +23,7 @@ jobs:
           latexmk
           scheme-basic
           catchfile
+          filecontents
           silence
     - name: Compile tests
       run: latexmk -pdf -shell-escape tests.tex
