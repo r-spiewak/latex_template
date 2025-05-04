@@ -1,0 +1,76 @@
+% \iffalse
+%<*package>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{testmacros}[2025/04/17 Macros for testing code]
+\def\testmacros@name{testmacros}
+
+\RequirePackage[T1]{fontenc}
+% \RequirePackage{xparse}
+
+% Macro to get package name of macro being tested:
+\newcommand{\getfunctionpackage}[2]{%
+  \edef#2{\csname test@package@#1\endcsname}%
+}
+
+
+% Internal macro to compare expected and actual and print result
+\newcommand{\tm@testequal}[3]{%
+    \begingroup
+        \newcommand{\removebs}[1]{%
+            \ifcat\relax\noexpand#1%
+                \expandafter\expandafter\expandafter\@gobble\expandafter\string
+            \fi
+            #1%
+        }%
+        % \newcommand{\removebs}[1]{%
+        %     {%
+        %         \catcode92=9 %
+        %         \endlinechar-1%
+        %         %\everyeof{\noexpand}%
+        %         % \edef\x{\scantokens{#1}}\x%
+        %         \scantokens{#1}%
+        %     }%
+        % }
+        % \ExplSyntaxOn
+        % \NewDocumentCommand{\removebs}{m}
+        % {
+        %     \tl_set:Nn \l_tmpa_tl { #1 }
+        %     \regex_replace_all:nnN { \cC. } { \c{cs_to_str:N} \0 } \l_tmpa_tl
+        %     \tl_use:N \l_tmpa_tl
+        % }
+        % \ExplSyntaxOff
+        \newcommand{\cmdname}{\removebs{#1}}%
+        % \texttt{Command name: \cmdname\\}
+        \edef\package{\csname test@package@\cmdname \endcsname}%
+        \newcommand{\cmd}{\expandafter\csname\cmdname\endcsname}%
+        \newcommand{\expected}{#3}%
+        \newcommand{\result}{\cmd{#2}}%
+        \long\edef\finalexpected{\expected}%
+        \long\edef\finalresult{\result}%
+        % \texttt{Testing [\textbackslash\detokenize{#1}\{#2\}]: Expected: [\finalexpected] ; Got: [\finalresult]}%
+        \texttt{Testing [\textbackslash\cmdname\{#2\}]: Expected: [\finalexpected] ; Got: [\finalresult]}%
+        % \ifx\result\expected
+        % \if\result\expected
+        \ifx\finalresult\finalexpected
+        % \if\finalresult\finalexpected
+            \texttt{ -- PASS}%
+            \typeout{[testmacros][\package] Test passed: [\finalresult] == [\finalexpected]}%
+            \typeout{[TEST][\package][\cmdname]{PASS}{input=#2}{expected=#3}}
+        \else
+            \texttt{ -- FAIL}%
+            \typeout{[testmacros][\package] Test FAILED: Expected [\finalexpected], Got [\finalresult]}%
+            \typeout{[TEST][\package][\cmdname][#2]{FAIL}}
+        \fi
+        \par
+    \endgroup
+}
+
+% Test a result
+% \newcommand{\tm@test}[2]{%
+%   \tm@testequal{#2}{\simplify{#1}}%
+% }
+\newcommand{\tm@test}[1]{#1}
+\def\test@package@tm@test{testmacros}
+
+%</package>
+% \fi

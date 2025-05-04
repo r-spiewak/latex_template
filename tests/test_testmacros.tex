@@ -1,0 +1,10 @@
+\section*{Testmacros}
+\makeatletter
+\indent Testing actual command: \\\tm@test{Test}
+
+Testing testequal command with test command:\\
+\noindent\tm@testequal{tm@test}{Test}{Test}
+\noindent\tm@testequal{tm@test}{Test}{Bad}
+\noindent\tm@testequal{\tm@test}{Test}{Test}
+\noindent\tm@testequal{\tm@test}{Test}{Bad}
+\makeatother

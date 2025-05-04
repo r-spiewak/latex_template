@@ -15,12 +15,37 @@ jobs:
     #     node-version: 16
     # - run: npm install-ci-test
     # - uses:
+    - name: Set up TeX Live
+      uses: teatimeguest/setup-texlive-action@v2
+      with:
+        packages: >-
+          latex-bin
+          latexmk
+          scheme-basic
+          catchfile
+          silence
+    - name: Compile tests
+      run: latexmk -pdf -shell-escape tests.tex
+    - name: Parse test results
+      run: bash utils/parse_tests.sh tests.log
     - name: Running checks
       # run: |
       #   source $VENV  
       #   bash checks.sh
       run: |
         bash checks.sh merge
+    - name: Upload PDF result
+      uses: actions/upload-artifact@v4
+      with:
+        name: compiled-tests
+        path: tests.pdf
+    - name: Upload logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-logs
+        path: tests.log
+    # - name: Clean auxiliary files
+    #   run: latexmk -c
   # publish:
   #   needs: [test]
   #   steps:

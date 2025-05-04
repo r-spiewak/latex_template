@@ -1,0 +1,31 @@
+\documentclass{article}
+
+\usepackage{silence}
+% Disable all warnings issued by latex starting with "You have requested package `'...".
+% This prevents a warning from appearing when loading packages from .dtx files (for example, on Overleaf).
+\WarningFilter{latex}{You have requested package `',}
+\usepackage{filecontents}
+\usepackage{catchfile}
+
+\IfFileExists{testmacros.sty}{
+  \usepackage{testmacros}
+}{
+  \makeatletter
+  \input{testmacros.dtx} % or whatever fallback code
+  \makeatother
+}
+
+\newcommand{\inputalltests}{%
+  \immediate\write18{find tests -name "*.tex" > testlist.tmp}%
+  \CatchFileDef{\testfiles}{testlist.tmp}{}%
+  \def\processnextfile##1^^J{%
+    \IfFileExists{##1}{\input{##1}}{}%
+  }%
+  \expandafter\processnextfile\testfiles^^J%
+}
+
+\begin{document}
+
+\inputalltests
+
+\end{document}
