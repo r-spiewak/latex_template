@@ -26,8 +26,8 @@ jobs:
           latexmk
           scheme-basic
           catchfile
-          # filecontents
           silence
+          # filecontents
     - name: Compile tests
       run: latexmk -pdf -shell-escape tests.tex
     - name: Parse test results
