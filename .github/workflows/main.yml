@@ -16,13 +16,14 @@ jobs:
     # - run: npm install-ci-test
     # - uses:
     - name: Set up TeX Live
-      uses: teatimeguest/setup-texlive-action@v2
+      # uses: teatimeguest/setup-texlive-action@v2
+      uses: dante-ev/texlive-action@v2
       # env:
       #     TEXLIVE_INSTALL_MIRROR: http://mirror.ctan.org/systems/texlive/tlnet
       with:
         texlive-version: 2024  # <- Pin to TeX Live 2024 (not 'latest')
         # mirror: http://mirror.ctan.org/systems/texlive/tlnet
-        mirror: http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet
+        mirror-url: http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet
         packages: >-
           latex-bin
           latexmk
