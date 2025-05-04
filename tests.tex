@@ -4,7 +4,7 @@
 % Disable all warnings issued by latex starting with "You have requested package `'...".
 % This prevents a warning from appearing when loading packages from .dtx files (for example, on Overleaf).
 \WarningFilter{latex}{You have requested package `',}
-\usepackage{filecontents}
+% \usepackage{filecontents}  # Not needed, included in kernel now.
 \usepackage{catchfile}
 
 \IfFileExists{testmacros.sty}{

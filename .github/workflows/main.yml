@@ -18,12 +18,15 @@ jobs:
     - name: Set up TeX Live
       uses: teatimeguest/setup-texlive-action@v2
       with:
+        env:
+          TEXLIVE_INSTALL_MIRROR: http://mirror.ctan.org/systems/texlive/tlnet
+        texlive-version: 2024  # <- Pin to TeX Live 2024 (not 'latest')
         packages: >-
           latex-bin
           latexmk
           scheme-basic
           catchfile
-          filecontents
+          # filecontents
           silence
     - name: Compile tests
       run: latexmk -pdf -shell-escape tests.tex
