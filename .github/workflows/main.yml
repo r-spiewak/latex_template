@@ -50,11 +50,13 @@ jobs:
       with:
         name: compiled-tests
         path: tests.pdf
+        overwrite: true
     - name: Upload logs
       uses: actions/upload-artifact@v4
       with:
         name: test-logs
         path: tests.log
+        overwrite: true
     # - name: Clean auxiliary files
     #   run: latexmk -c
   # publish:
