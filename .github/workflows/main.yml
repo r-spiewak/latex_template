@@ -44,7 +44,7 @@ jobs:
       #   source $VENV  
       #   bash checks.sh
       run: |
-        bash checks.sh merge
+        bash checks.sh merge tests.log
     - name: Upload PDF result
       uses: actions/upload-artifact@v4
       with:

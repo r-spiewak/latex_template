@@ -19,6 +19,9 @@ install_package(){
 
 test_check(){
     DEBUG_FLAG="$1"
+    # echo "DEBUG_FLAG=$DEBUG_FLAG"
+    # echo "All args: $@"
+    shift 1
     echo "Running test"
     if [[ $DEBUG_FLAG == "yes" ]]
     then
@@ -42,12 +45,14 @@ pre_commit(){
     shift 2
     if [[ $TESTS_FLAG == "yes" ]]
     then
-        test_check $DEBUG_FLAG
+        test_check $DEBUG_FLAG $*
     fi
 }
 
 pre_merge(){
-    test_check
+    DEBUG_FLAG="$1"
+    shift 1
+    test_check $DEBUG_FLAG $*
 }
 
 help(){
@@ -111,7 +116,7 @@ case $CMD in
         exit 0
         ;;
     *merge)
-        pre_merge $*
+        pre_merge $DEBUG $*
         exit 0
         ;;
     help)

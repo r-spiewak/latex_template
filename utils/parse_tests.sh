@@ -7,6 +7,10 @@ if [ -z "$LOGFILE" ]; then
   echo "Usage: $0 logfile.log"
   exit 1
 fi
+if ! [ -f "$LOGFILE" ]; then
+  echo "Logfile $LOGFILE not found."
+  exit 1
+fi
 
 # Extract only relevant lines:
 # TEST_LINES=$(grep "\[testmacros\]" "$LOGFILE")
