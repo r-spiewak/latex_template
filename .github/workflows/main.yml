@@ -50,14 +50,14 @@ jobs:
         echo ${{ runner.os }}
     - name: Upload PDF result
       uses: actions/upload-artifact@v4
-      if: ${{ runner.os == 'Ubuntu' }}
+      if: ${{ runner.os == 'Linux' }}
       with:
         name: compiled-tests
         path: tests.pdf
         # overwrite: true
     - name: Upload logs
       uses: actions/upload-artifact@v4
-      if: ${{ runner.os == 'Ubuntu' }}
+      if: ${{ runner.os == 'Linux' }}
       with:
         name: test-logs
         path: tests.log
