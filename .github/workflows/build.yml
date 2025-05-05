@@ -28,22 +28,22 @@ jobs:
           silence
           # filecontents
     - name: Generate .sty from .ins
-      if: ${{ runner.os == 'Linux' }}
+      # if: ${{ runner.os == 'Linux' }}
       run: pdflatex $PACKAGE_NAME.ins
     - name: Upload .sty as artifact
-      if: ${{ runner.os == 'Linux' }}
+      # if: ${{ runner.os == 'Linux' }}
       uses: actions/upload-artifact@v4
       with:
-        name: $PACKAGE_NAME-sty
-        path: $PACKAGE_NAME.sty
+        name: ${{ env.PACKAGE_NAME }}-sty
+        path: ${{ env.PACKAGE_NAME }}.sty
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
-          $PACKAGE_NAME.sty
-          $PACKAGE_NAME.dtx
-          $PACKAGE_NAME.ins
+          ${{ env.PACKAGE_NAME }}.sty
+          ${{ env.PACKAGE_NAME }}.dtx
+          ${{ env.PACKAGE_NAME }}.ins
           README.md
     - name: Create CTAN zip bundle
       run: zip $PACKAGE_NAME.zip $PACKAGE_NAME.dtx $PACKAGE_NAME.ins $PACKAGE_NAME.sty README.md
