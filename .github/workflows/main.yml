@@ -47,16 +47,18 @@ jobs:
         bash checks.sh merge tests.log
     - name: Upload PDF result
       uses: actions/upload-artifact@v4
+      if: ${{ runner.os == 'Ubuntu' }}
       with:
         name: compiled-tests
         path: tests.pdf
-        overwrite: true
+        # overwrite: true
     - name: Upload logs
       uses: actions/upload-artifact@v4
+      if: ${{ runner.os == 'Ubuntu' }}
       with:
         name: test-logs
         path: tests.log
-        overwrite: true
+        # overwrite: true
     # - name: Clean auxiliary files
     #   run: latexmk -c
   # publish:
