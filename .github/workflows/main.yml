@@ -45,6 +45,9 @@ jobs:
       #   bash checks.sh
       run: |
         bash checks.sh merge tests.log
+    - name: Check OS
+      run: |
+        echo ${{ runner.os }}
     - name: Upload PDF result
       uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Ubuntu' }}
