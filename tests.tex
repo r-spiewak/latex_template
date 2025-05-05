@@ -14,6 +14,13 @@
   \input{testmacros.dtx} % or whatever fallback code
   \makeatother
 }
+\IfFileExists{unnamed.sty}{
+  \usepackage{unnamed}
+}{
+  \makeatletter
+  \input{unnamed.dtx} % or whatever fallback code
+  \makeatother
+}
 
 \newcommand{\inputalltests}{%
   \immediate\write18{find tests -name "*.tex" > testlist.tmp}%

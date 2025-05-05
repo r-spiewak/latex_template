@@ -1,5 +1,5 @@
 env:
-  PACKAGE_NAME: <unnamed>
+  PACKAGE_NAME: unnamed
 
 name: Build and Release LaTeX Package
 # This should be triggered for a tagged release, such as:
