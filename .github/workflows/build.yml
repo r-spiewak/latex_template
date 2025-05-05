@@ -42,7 +42,7 @@ jobs:
         name: ${{ env.PACKAGE_NAME }}-sty
         path: ${{ env.PACKAGE_NAME }}.sty
     - name: Create CTAN zip bundle
-      run: zip $PACKAGE_NAME.zip $PACKAGE_NAME.dtx $PACKAGE_NAME.ins $PACKAGE_NAME.sty
+      run: zip $PACKAGE_NAME.zip $PACKAGE_NAME.dtx $PACKAGE_NAME.ins $PACKAGE_NAME.sty README.md
     - name: Create GitHub release
       # uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
