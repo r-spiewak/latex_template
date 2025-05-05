@@ -18,4 +18,4 @@ When using this template, replace all occurances of `unnamed` with the name of t
 To generate releases, trigger the workflow for a tagged release with a command such as
 `git tag v1.0.0` to tag a release, and then 
 `git push origin v1.0.0` (to only push the tag, and not the associated commits)
-or `git push --tags` (to push all commits and tags).
+or `git push --follow-tags` (to push all commits and related tags).

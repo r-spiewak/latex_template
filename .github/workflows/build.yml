@@ -6,8 +6,8 @@ name: Build and Release LaTeX Package
 # git tag v1.0.0
 # git push origin v1.0.0
 # (to only push tags)
-# or git push --tags
-# (to push all commits and tags)
+# or git push --follow-tags
+# (to push all commits and related tags)
 on:
   push:
     tags:
