@@ -13,6 +13,8 @@ on:
 jobs:
   build:
     # if: ${{ github.ref == 'refs/heads/main' }}
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:  
     - uses: actions/checkout@v4
@@ -37,14 +39,24 @@ jobs:
         name: ${{ env.PACKAGE_NAME }}-sty
         path: ${{ env.PACKAGE_NAME }}.sty
     - name: Create GitHub release
-      uses: softprops/action-gh-release@v1
+      # uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: |
-          ${{ env.PACKAGE_NAME }}.sty
-          ${{ env.PACKAGE_NAME }}.dtx
-          ${{ env.PACKAGE_NAME }}.ins
-          README.md
+      # with:
+      #   files: |
+      #     ${{ env.PACKAGE_NAME }}.sty
+      #     ${{ env.PACKAGE_NAME }}.dtx
+      #     ${{ env.PACKAGE_NAME }}.ins
+      #     README.md
+      env:
+        GITHUB_TOKEN: ${{ secrets. GITHUB_TOKEN }}
+      run: >-
+        gh release create ${{ github.ref_name }}
+        "$PACKAGE_NAME.zip"
+        --generate-notes
+        --title "Version ${{ github.ref_name }}"
+        $PACKAGE_NAME.sty
+        $PACKAGE_NAME.ins
+        $PACKAGE_NAME.dtx
     - name: Create CTAN zip bundle
       run: zip $PACKAGE_NAME.zip $PACKAGE_NAME.dtx $PACKAGE_NAME.ins $PACKAGE_NAME.sty README.md
     
