@@ -11,40 +11,44 @@
 \newcommand{\getfunctionpackage}[2]{%
   \edef#2{\csname test@package@#1\endcsname}%
 }
+\def\test@package@tm@getfunctionpackage{testmacros}
+
+% Remove a backslash:
+\newcommand{\removebs}[1]{%
+    \ifcat\relax\noexpand#1%
+        \expandafter\expandafter\expandafter\@gobble\expandafter\string
+    \fi
+    #1%
+}%
+% \newcommand{\removebs}[1]{%
+%     {%
+%         \catcode92=9 %
+%         \endlinechar-1%
+%         %\everyeof{\noexpand}%
+%         % \edef\x{\scantokens{#1}}\x%
+%         \scantokens{#1}%
+%     }%
+% }
+% \ExplSyntaxOn
+% \NewDocumentCommand{\removebs}{m}
+% {
+%     \tl_set:Nn \l_tmpa_tl { #1 }
+%     \regex_replace_all:nnN { \cC. } { \c{cs_to_str:N} \0 } \l_tmpa_tl
+%     \tl_use:N \l_tmpa_tl
+% }
+% \ExplSyntaxOff
+\def\test@package@tm@removebs{testmacros}
 
 
 % Internal macro to compare expected and actual and print result
 \newcommand{\tm@testequal}[3]{%
     \begingroup
-        \newcommand{\removebs}[1]{%
-            \ifcat\relax\noexpand#1%
-                \expandafter\expandafter\expandafter\@gobble\expandafter\string
-            \fi
-            #1%
-        }%
-        % \newcommand{\removebs}[1]{%
-        %     {%
-        %         \catcode92=9 %
-        %         \endlinechar-1%
-        %         %\everyeof{\noexpand}%
-        %         % \edef\x{\scantokens{#1}}\x%
-        %         \scantokens{#1}%
-        %     }%
-        % }
-        % \ExplSyntaxOn
-        % \NewDocumentCommand{\removebs}{m}
-        % {
-        %     \tl_set:Nn \l_tmpa_tl { #1 }
-        %     \regex_replace_all:nnN { \cC. } { \c{cs_to_str:N} \0 } \l_tmpa_tl
-        %     \tl_use:N \l_tmpa_tl
-        % }
-        % \ExplSyntaxOff
         \newcommand{\cmdname}{\removebs{#1}}%
         % \texttt{Command name: \cmdname\\}
         \edef\package{\csname test@package@\cmdname \endcsname}%
         \newcommand{\cmd}{\expandafter\csname\cmdname\endcsname}%
         \newcommand{\expected}{#3}%
-        \newcommand{\result}{\cmd{#2}}%
+        \newcommand{\result}{\cmd#2}%
         \long\edef\finalexpected{\expected}%
         \long\edef\finalresult{\result}%
         % \texttt{Testing [\textbackslash\detokenize{#1}\{#2\}]: Expected: [\finalexpected] ; Got: [\finalresult]}%
@@ -64,6 +68,64 @@
         \par
     \endgroup
 }
+\def\test@package@tm@testequal{testmacros}
+
+
+\def\tm@expandresult#1{%
+  \edef\result{#1}%
+}
+\def\test@package@tm@expandresult{testmacros}
+% Run command \cmdname with args, compare to expected result.
+\newcommand{\tm@testequalN}[3]{%
+    \begingroup
+        % \edef\cmdname{\expandafter\@gobble\string#1}%
+        % \edef\package{\csname test@package@\cmdname\endcsname}%
+        \newcommand{\cmdname}{\removebs{#1}}%
+        % \texttt{Command name: \cmdname\\}
+        \edef\package{\csname test@package@\cmdname\endcsname}%
+        \newcommand{\cmd}{\expandafter\csname\cmdname\endcsname}%
+
+        % Define the result by applying #1 to args #2
+        % \edef\temp{\noexpand#1#2}%
+        \edef\temp{\cmd#2}%
+        % \edef\result{\temp}%
+        \tm@expandresult{\temp}%
+        \edef\expected{#3}%
+    
+        % Print raw output and result
+        % \texttt{Testing [\textbackslash\cmdname#2]: Expected: [\expected] ; Got: [\result]}%
+        \texttt{Testing [\tm@printmacrocallN{\cmdname}#2\@nil]: Expected: [\expected] ; Got: [\result]}%
+    
+        \ifx\result\expected
+            \texttt{ -- PASS}%
+            \typeout{[testmacros][\package] Test passed: [\result] == [\expected]}%
+            \typeout{[TEST][\package][\cmdname]{PASS}{input=#2}{expected=#3}}%
+        \else
+            \texttt{ -- FAIL}%
+            \typeout{[testmacros][\package] Test FAILED: Expected [\expected], Got [\result]}%
+            \typeout{[TEST][\package][\cmdname]{FAIL}{input=#2}{expected=#3}}%
+        \fi
+        \par
+    \endgroup
+}
+\def\test@package@tm@testequalN{testmacros}
+
+% Usage: \tm@printmacrocallN{\se@foo}{arg1}{arg2}{arg3}...\@nil
+\def\tm@printmacrocallN#1{%
+    \textbackslash#1%
+    \tm@printmacrocall@loop
+}
+\def\test@package@tm@printmacrocallN{testmacros}
+\def\tm@printmacrocall@loop#1{%
+    \ifx#1\@nil
+        % Done
+    \else
+        \{#1\}%
+        \expandafter\tm@printmacrocall@loop
+    \fi
+}
+\def\test@package@tm@printmacrocall@loop{testmacros}
+
 
 % Test a result
 % \newcommand{\tm@test}[2]{%
