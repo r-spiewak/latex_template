@@ -6,12 +6,18 @@ Includes tests and test frameworks for LaTeX packages and macros.
 
 ## Installation
 
+Ensure you have a `LaTex` installation and package manager. If not, see `https://tug.org/texlive/quickinstall.html` for some instructions.
+
 1. `git clone https://github.com/r-spiewak/latex_template.git`
 
 ## Dev Installation
 
 After completing the regular installation above, also do the following:
 1. Install pre-commit (e.g., `apt install pre-commit`), if not already installed.
+2. Run `bash utils/install-packages.sh` to install dependencies (if you didn't install all available packages with `tlmgr`).
+3. (Optional, but recommended:) Compile `testmacros.ins` (or `all.ins`) to produce `testmacros.sty`.
+
+When adding packages, the script `utils/generate-packages.sh` is useful.
 
 When using this template, replace all occurances of `unnamed` with the name of the new package. Specifically, the file names `unnamed.ins` and `unnamed.dtx`, as well as the in the contents of those files, in `all.ins`, in `tests.tex`, and the top of `.github/workflows/build.yml`. Add dependencies to the lists in `.github/workflows/main.yml` and `.github/workflows/build.yml`. Also replace the top of this `README.md` file with appropriate information.
 

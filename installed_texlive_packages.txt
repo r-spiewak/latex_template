@@ -1,0 +1,8 @@
+latex-bin
+latexmk
+scheme-basic
+catchfile
+silence
+ifthen
+xstring
+calc
